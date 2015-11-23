@@ -1,0 +1,8 @@
+#image prefix e.g. cam1, cam2
+declare -A cameras
+cameras[1]=cam1
+
+videoLength=60
+workingDir=/path/to/images
+publishedDir=/path/to/publish/video/
+format=jpg
