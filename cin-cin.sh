@@ -2,7 +2,7 @@
 #!/bin/bash
 
 main() {
-    source settings.cfg
+    source settings.cnf
 
     for camera in "${cameras[@]}"
     do
