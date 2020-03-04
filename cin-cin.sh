@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 main() {
     source "${BASH_SOURCE%/*}/settings2.cnf"
