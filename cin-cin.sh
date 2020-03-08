@@ -15,10 +15,9 @@ main() {
 createSequenceFile() {
    echo -e "file '$(getLastImage $camera)'\nduration 5" >> $workingDir$camera.txt
 
-   duration=$(getSequenceFrameRate $camera)
-   for file in $(ls -1 $workingDir$camera-*.$format); do
+   for file in $(find $workingDir -type f -newermt "$(/bin/date +"%Y-%m-%d") 08:00:00" ! -newermt now -name $camera-*.$format | sort -n); do
       echo "file '$file'" >> $workingDir$camera.txt
-      echo duration $duration >> $workingDir$camera.txt
+      echo duration 0.2 >> $workingDir$camera.txt
    done
 }
 
@@ -39,16 +38,6 @@ cleanUp() {
 
 getLastImage() {
     /bin/ls -r $workingDir$1*.$format | head -1
-}
-
-getSequenceFrameRate() {
-    camera=$1
-    /usr/bin/bc -l <<< "scale=2; $videoLength/$(getSequenceCount $camera)" | /usr/bin/awk '{printf "%.4f\n", $0}'
-}
-
-getSequenceCount() {
-    camera=$1
-    /bin/ls $workingDir$camera*.$format | /usr/bin/wc -l
 }
 
 main "$@"
