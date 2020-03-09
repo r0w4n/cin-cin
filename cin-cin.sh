@@ -17,7 +17,7 @@ createSequenceFile() {
 
    for file in $(find $workingDir -type f -newermt "$(/bin/date +"%Y-%m-%d") 08:00:00" ! -newermt now -name $camera-*.$format | sort -n); do
       echo "file '$file'" >> $workingDir$camera.txt
-      echo duration $duration >> $workingDir$camera.txt
+      echo duration $imageDuration >> $workingDir$camera.txt
    done
 }
 
