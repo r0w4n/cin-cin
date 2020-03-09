@@ -5,3 +5,4 @@ cameras[1]=cam1
 workingDir=/path/to/images
 publishedDir=/path/to/publish/video/
 format=jpg
+imageDuration=0.2
