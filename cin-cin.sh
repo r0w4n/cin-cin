@@ -5,32 +5,26 @@ main() {
 
     for camera in "${cameras[@]}"
     do
-      	createSequenceFile $camera
-        createSequence $camera
-        publish $camera
-        cleanUp $camera
+      	createSequenceFile
+        createVideo
+        publish
     done
 }
 
 createSequenceFile() {
-   echo -e "file '$(getLastImage $camera)'\nduration 5" >> $workingDir$camera.txt
+   echo -e "file '$(getLastImage $camera)'\nduration 5" > $workingDir$camera.txt
 
    for file in $(find $workingDir -type f -newermt "$(/bin/date +"%Y-%m-%d") 08:00:00" ! -newermt now -name $camera-*.$format | sort -n); do
-      echo "file '$file'" >> $workingDir$camera.txt
-      echo duration $imageDuration >> $workingDir$camera.txt
+      echo -e "file '$file'\nduration $imageDuration" >> $workingDir$camera.txt
    done
 }
 
-createSequence() {
+createVideo() {
     /usr/bin/ffmpeg -f concat -i $workingDir$camera.txt -vsync vfr -pix_fmt yuv420p $workingDir$camera-output.mp4 -y
 }
 
 publish() {
     /bin/mv $workingDir$camera-output.mp4 $publishedDir/$camera.mp4
-}
-
-cleanUp() {
-    /bin/rm $workingDir$camera.txt
 }
 
 getLastImage() {
