@@ -6,7 +6,11 @@ main() {
     for camera in "${cameras[@]}"
     do
       	createSequenceFile
-        createVideo
+    done
+
+    for camera in "${cameras[@]}"
+    do
+      	createVideo
         publish
     done
 }
@@ -20,7 +24,7 @@ createSequenceFile() {
 }
 
 createVideo() {
-    /usr/bin/ffmpeg -f concat -i $workingDir$camera.txt -vsync vfr -pix_fmt yuv420p $workingDir$camera-output.mp4 -y
+    /usr/bin/ffmpeg -f concat -i $workingDir$camera.txt -vsync vfr -pix_fmt yuv420p -tune stillimage -preset superfast $workingDir$camera-output.mp4 -y
 }
 
 publish() {
